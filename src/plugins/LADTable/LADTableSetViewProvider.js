@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Open MCT, Copyright (c) 2014-2020, United States Government
+ * Open MCT, Copyright (c) 2014-2024, United States Government
  * as represented by the Administrator of the National Aeronautics and Space
  * Administration. All rights reserved.
  *
@@ -19,46 +19,22 @@
  * this source code distribution or the Licensing information page available
  * at runtime from the About dialog for additional information.
  *****************************************************************************/
-import LadTableSet from './components/LadTableSet.vue';
-import Vue from 'vue';
+
+import LadTableSetView from './LadTableSetView.js';
 
 export default function LADTableSetViewProvider(openmct) {
-    return {
-        key: 'LadTableSet',
-        name: 'LAD Table Set',
-        cssClass: 'icon-tabular-lad-set',
-        canView: function (domainObject) {
-            return domainObject.type === 'LadTableSet';
-        },
-        canEdit: function (domainObject) {
-            return domainObject.type === 'LadTableSet';
-        },
-        view: function (domainObject, objectPath) {
-            let component;
-
-            return {
-                show: function (element) {
-                    component = new Vue({
-                        el: element,
-                        components: {
-                            LadTableSet: LadTableSet
-                        },
-                        provide: {
-                            openmct,
-                            domainObject,
-                            objectPath
-                        },
-                        template: '<lad-table-set></lad-table-set>'
-                    });
-                },
-                destroy: function (element) {
-                    component.$destroy();
-                    component = undefined;
-                }
-            };
-        },
-        priority: function () {
-            return 1;
-        }
-    };
+  return {
+    key: 'LadTableSet',
+    name: 'LAD Table Set',
+    cssClass: 'icon-tabular-lad-set',
+    canView: function (domainObject) {
+      return domainObject.type === 'LadTableSet';
+    },
+    canEdit: function (domainObject) {
+      return domainObject.type === 'LadTableSet';
+    },
+    view: function (domainObject, objectPath) {
+      return new LadTableSetView(openmct, domainObject, objectPath);
+    }
+  };
 }

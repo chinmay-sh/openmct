@@ -1,17 +1,32 @@
 /******************************* LIST ITEM */
 .c-list-item {
-    &__type-icon {
-        color: $colorItemTreeIcon;
-    }
+  color: $colorItemFgDetails;
 
-    &__name {
-        @include ellipsize();
-    }
+  &__name__type-icon {
+    color: $colorItemTreeIcon;
+  }
 
-    &.is-alias {
-        // Object is an alias to an original.
-        [class*='__type-icon'] {
-            @include isAlias();
-        }
+  &__name__name {
+    @include ellipsize();
+
+    a & {
+      // .c-list-item_name a element
+      color: $colorItemFg;
     }
+  }
+
+  &:not(.c-list-item__name) {
+  }
+
+  &.is-alias {
+    // Object is an alias to an original.
+    [class*='__type-icon'] {
+      @include isAlias();
+    }
+  }
+
+  [class*='l-overlay'] & {
+    // When this view is in an overlay, prevent navigation
+    pointer-events: none;
+  }
 }
